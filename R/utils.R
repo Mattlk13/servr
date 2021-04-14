@@ -171,11 +171,17 @@ serve_example = function(name, FUN, ..., run = interactive()) {
 #' @inheritParams server_config
 #' @export
 #' @return A port number, or an error if no ports are available.
-random_port = function(port = 4321L, host = '127.0.0.1', n = 20) {
+random_port = function(port = 4321L, host = getOption('servr.host', '127.0.0.1'), n = 20) {
   # exclude ports considered unsafe by Chrome http://superuser.com/a/188070
   ports = sample(setdiff(3000:8000, c(3659, 4045, 6000, 6665:6669)), n)
   ports = c(port, ports)
   port = NULL
+  # when a port has been used on 0.0.0.0, port_available() still returns TRUE
+  # when the same port is tested on 127.0.0.1, which might be a bug of httpuv;
+  # so we provide an option to test the availability of a port on 0.0.0.0 when
+  # we intend to serve a site on 127.0.0.1
+  if (host == '127.0.0.1' && getOption('servr.test.0.0.0.0', FALSE))
+    host = '0.0.0.0'
   for (p in ports) if (port_available(p, host)) {
     port = p
     break
@@ -184,8 +190,8 @@ random_port = function(port = 4321L, host = '127.0.0.1', n = 20) {
   port
 }
 
-port_available = function(port, host = '127.0.0.1') {
-  tmp = try(startServer(host, port, list()), silent = TRUE)
+port_available = function(port, host = getOption('servr.host', '127.0.0.1')) {
+  tmp = try(startServer(host, port, list(), quiet = TRUE), silent = TRUE)
   if (inherits(tmp, 'try-error')) return(FALSE)
   stopServer(tmp)
   TRUE
@@ -206,12 +212,16 @@ read_raw = function(path) readBin(path, 'raw', file_size(path))
 
 # store the last browsing function, so that we can reopen a page after it has
 # been closed in the browser
-servrEnv$browse = function(reopen = TRUE) {}
+servrEnv$browse = function(reopen = TRUE) {
+  message('It seems you have not served any content with servr yet.')
+}
 
 #' Reopen the last browsed page
 #'
 #' If you have launched a page in the browser via \pkg{servr} but closed it
 #' later, you may call this function to reopen it.
+#' @param open Whether to reopen the lastly browsed page. If \code{FALSE}, the
+#'   URL of the previously browsed page will be returned.
 #' @export
 #' @examples servr::browse_last()
-browse_last = function() servrEnv$browse(TRUE)
+browse_last = function(open = TRUE) servrEnv$browse(open)

@@ -1,19 +1,17 @@
 # servr
 
-[![Build Status](https://travis-ci.org/yihui/servr.svg)](https://travis-ci.org/yihui/servr)
-[![CRAN downloads from the RStudio mirror](https://cranlogs.r-pkg.org/badges/servr)](https://cran.r-project.org/package=servr)
+<!-- badges: start -->
+[![R-CMD-check](https://github.com/yihui/servr/workflows/R-CMD-check/badge.svg)](https://github.com/yihui/servr/actions)
+[![CRAN release](https://www.r-pkg.org/badges/version/servr)](https://cran.r-project.org/package=servr)
+<!-- badges: end -->
+
 
 A simple HTTP server to serve files under a given directory based on the
 [**httpuv**](https://cran.r-project.org/package=httpuv) package.
 
 You can install this package from
-[CRAN](https://cran.r-project.org/package=servr) (stable version) or
-[XRAN](https://xran.yihui.name) (development version):
-
-```r
-install.packages('servr')  # stable version; use a CRAN mirror, or
-install.packages('servr', repos = 'https://xran.yihui.name')  # devel version
-```
+[CRAN](https://cran.r-project.org/package=servr) (stable version) via `install.packages('servr')` or
+[r-universe.dev](https://yihui.r-universe.dev) (development version).
 
 This package is licensed under GPL.
 
@@ -29,8 +27,7 @@ http.server`. It may be used to serve:
 - [**googleVis**](https://cran.r-project.org/package=googleVis) charts (to avoid
   the Flash security issue)
 - D3 charts which need to load JSON from local files (see also the
-  [**animint**](https://github.com/tdhock/animint) package)
-- [**rCharts**](http://rcharts.io) and
+  [**animint2**](https://github.com/tdhock/animint2) package), and
   [**samatha**](https://github.com/DASpringate/samatha), etc
 
 You can either run `servr::httd()` in an interactive R session, or run from
@@ -38,16 +35,16 @@ command line:
 
 ```bash
 # default: port 4321, do not launch browser
-Rscript -e 'servr::httd()'
+Rscript -e "servr::httd()"
 
 # open a web browser
-Rscript -e 'servr::httd()' -b
+Rscript -e "servr::httd()" -b
 
 # listen on port 4000
-Rscript -e 'servr::httd()' -p4000
+Rscript -e "servr::httd()" -p4000
 
 # pass arguments to the httd() function
-Rscript -e 'servr::httd(,4000,TRUE)'
+Rscript -e "servr::httd(,4000,TRUE)"
 ```
 
 There is also a shell script under `system.file('bin', package = 'servr')`;
@@ -70,7 +67,7 @@ deleted, or modified certain files in the directory).
 
 Besides `httd()`, there are functions `jekyll()`, `rmdv1()`, and `rmdv2()` in
 this package to serve HTML files generated from R Markdown documents (via
-[**knitr**](https://yihui.name/knitr/) or
+[**knitr**](https://yihui.org/knitr/) or
 [**rmarkdown**](https://rmarkdown.rstudio.com)). R Markdown documents can be
 automatically re-compiled when their HTML output files are older than the
 corresponding source files, and HTML pages in the web browser can be

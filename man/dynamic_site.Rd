@@ -6,15 +6,19 @@
 \alias{rmdv1}
 \title{Serve R Markdown based websites}
 \usage{
-jekyll(dir = ".", input = c(".", "_source", "_posts"), output = c(".", 
-    "_posts", "_posts"), script = c("Makefile", "build.R"), serve = TRUE, 
-    command = "jekyll build", ...)
+jekyll(
+  dir = ".",
+  input = c(".", "_source", "_posts"),
+  output = c(".", "_posts", "_posts"),
+  script = c("Makefile", "build.R"),
+  serve = TRUE,
+  command = "jekyll build",
+  ...
+)
 
-rmdv2(dir = ".", script = c("Makefile", "build.R"), in_session = FALSE, 
-    ...)
+rmdv2(dir = ".", script = c("Makefile", "build.R"), in_session = FALSE, ...)
 
-rmdv1(dir = ".", script = c("Makefile", "build.R"), in_session = FALSE, 
-    ...)
+rmdv1(dir = ".", script = c("Makefile", "build.R"), in_session = FALSE, ...)
 }
 \arguments{
 \item{dir}{the root directory of the website}
@@ -112,9 +116,9 @@ servr::serve_example("rmd", servr::rmdv2)
 }
 \references{
 R Markdown v1: \url{https://cran.r-project.org/package=markdown}. R
-  Markdown v2: \url{http://rmarkdown.rstudio.com}. For Jekyll, see
-  \url{http://jekyllrb.com}. The GitHub repository
-  \url{https://github.com/yihui/knitr-jekyll} is an example of serving Jekyll
+  Markdown v2: \url{https://rmarkdown.rstudio.com}. For Jekyll, see
+  \url{https://jekyllrb.com}. The GitHub repository
+  \url{https://github.com/yihui/blogdown-jekyll} is an example of serving Jekyll
   websites with \code{servr::jekyll()}.
 }
 \seealso{
